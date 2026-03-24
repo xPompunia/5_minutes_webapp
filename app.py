@@ -7,9 +7,10 @@ from processor import parse_docx_to_excel
 # Edit styles
 hide_streamlit_style = """
             <style>
-            #MainMenu {visibility: hidden;}
+            #MainMenu, .stToolbarActionButton, .stAppDeployButton {visibility: hidden;}
             footer {visibility: hidden;}
-            .css-1gdpby3 {border: 2px dashed #d33682;} 
+            .css-1gdpby3 {border: 2px dashed #a3a2a2;}
+            [data-testid='stFileUploaderDropzone'] {border: 2px dashed #a3a2a2;}
             </style>
             """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)

@@ -115,13 +115,19 @@ def parse_docx_to_excel(docx_file, empty_xlsx_path, target_year):
             continue
 
         if " • " in text or "•" in text:
-            if 'contemplation' in current_day and current_day['contemplation']:
-                lines = current_day['contemplation'].strip().split('\n')
-                if lines and lines[-1].strip().endswith('?'):
-                    current_day['contemplation_question'] = lines[-1].strip()
-                    current_day['contemplation'] = '\n'.join(lines[:-1]).strip()
-
             if current_day:
+                if 'contemplation' in current_day and current_day['contemplation']:
+                    lines = current_day['contemplation'].strip().split('\n')
+                    if lines and lines[-1].strip().endswith('?'):
+                        current_day['contemplation_question'] = lines[-1].strip()
+                        current_day['contemplation'] = '\n'.join(lines[:-1]).strip()
+
+                for key in ['gospel', 'contemplation', 'prayer']:
+                    if key in current_day and current_day[key]:
+                        current_day[key] = current_day[key].replace('\n', ' ')
+                        # usuwamy ewentualne podwójne spacje po usunięciu enterów
+                        current_day[key] = re.sub(r'\s+', ' ', current_day[key]).strip()
+
                 rows.append(current_day)
 
             date_part = text.split("•")[-1].strip()
@@ -191,18 +197,27 @@ def parse_docx_to_excel(docx_file, empty_xlsx_path, target_year):
 
         else:
             if current_section:
+                if current_section == "psalm" and text.endswith('.'):
+                    text += "*"
+
                 if current_day.get(current_section):
                     current_day[current_section] += "\n" + text
                 else:
                     current_day[current_section] = text
 
-    if 'contemplation' in current_day and current_day['contemplation']:
-        lines = current_day['contemplation'].strip().split('\n')
-        if lines and lines[-1].strip().endswith('?'):
-            current_day['contemplation_question'] = lines[-1].strip()
-            current_day['contemplation'] = '\n'.join(lines[:-1]).strip()
-
+    # Zapisz ostatni dzień z pętli (te same operacje oczyszczania co wyżej)
     if current_day:
+        if 'contemplation' in current_day and current_day['contemplation']:
+            lines = current_day['contemplation'].strip().split('\n')
+            if lines and lines[-1].strip().endswith('?'):
+                current_day['contemplation_question'] = lines[-1].strip()
+                current_day['contemplation'] = '\n'.join(lines[:-1]).strip()
+
+        for key in ['gospel', 'contemplation', 'prayer']:
+            if key in current_day and current_day[key]:
+                current_day[key] = current_day[key].replace('\n', ' ')
+                current_day[key] = re.sub(r'\s+', ' ', current_day[key]).strip()
+
         rows.append(current_day)
 
     empty_df = pd.read_excel(empty_xlsx_path)

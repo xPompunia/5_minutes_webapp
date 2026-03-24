@@ -56,7 +56,16 @@ def process_feast_audio(text):
     roman_to_ordinal = {
         r"\bI\b": "Pierwsza", r"\bII\b": "Druga", r"\bIII\b": "Trzecia",
         r"\bIV\b": "Czwarta", r"\bV\b": "Piąta", r"\bVI\b": "Szósta",
-        r"\bVII\b": "Siódma", r"\bVIII\b": "Ósma"
+        r"\bVII\b": "Siódma", r"\bVIII\b": "Ósma", r"\bIX\b": "Dziewiąta",
+        r"\bX\b": "Dziesiąta", r"\bXI\b": "Jedenasta", r"\bXII\b": "Dwunasta",
+        r"\bXIII\b": "Trzynasta", r"\bXIV\b": "Czternasta", r"\bXV\b": "Piętnasta",
+        r"\bXVI\b": "Szesnasta", r"\bXVII\b": "Siedemnasta", r"\bXVIII\b": "Osiemnasta",
+        r"\bXIX\b": "Dziewiętnasta", r"\bXX\b": "Dwudziesta", r"\bXXI\b": "Dwudziesta pierwsza",
+        r"\bXXII\b": "Dwudziesta druga", r"\bXXIII\b": "Dwudziesta trzecia", r"\bXXIV\b": "Dwudziesta czwarta",
+        r"\bXXV\b": "Dwudziesta piąta", r"\bXXVI\b": "Dwudziesta szósta", r"\bXXVII\b": "Dwudziesta siódma",
+        r"\bXXVIII\b": "Dwudziesta ósma", r"\bXXIX\b": "Dwudziesta dziewiąta", r"\bXXX\b": "Trzydziesta",
+        r"\bXXXI\b": "Trzydziesta pierwsza", r"\bXXXII\b": "Trzydziesta druga", r"\bXXXIII\b": "Trzydziesta trzecia",
+        r"\bXXXIV\b": "Trzydziesta czwarta"
     }
     for roman, ordinal in roman_to_ordinal.items():
         text = re.sub(roman, ordinal, text)

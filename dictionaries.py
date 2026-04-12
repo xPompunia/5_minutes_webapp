@@ -17,6 +17,15 @@ BIBLICAL_BOOKS = {
     r"\bSyr\b": "Mądrości Syracha",
     r"\bPnp\b": "Pieśni nad Pieśniami",
     r"\bAp\b": "Apokalipsy świętego Jana Apostoła",
+    # Księgi historyczne (często z cyframi)
+    r"\b1 Krn\b": "pierwszej Księgi Kronik",
+    r"\b2 Krn\b": "drugiej Księgi Kronik",
+    r"\b1 Sm\b": "pierwszej Księgi Samuela",
+    r"\b2 Sm\b": "drugiej Księgi Samuela",
+    r"\b1 Krl\b": "pierwszej Księgi Królewskiej",
+    r"\b2 Krl\b": "drugiej Księgi Królewskiej",
+    r"\b1 Mch\b": "pierwszej Księgi Machabejskiej",
+    r"\b2 Mch\b": "drugiej Księgi Machabejskiej",
 
     # Listy św. Pawła (łączą się z "Pieśń z...")
     r"\bRz\b": "listu świętego Pawła Apostoła do Rzymian",

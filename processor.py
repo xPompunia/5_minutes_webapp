@@ -28,14 +28,16 @@ def process_audio_text(text):
         r'\b(\d+)\s+(stycznia|lutego|marca|kwietnia|maja|czerwca|lipca|sierpnia|września|października|listopada|grudnia)\b',
         lambda m: f"{ORDINAL_GENITIVE.get(m.group(1), m.group(1))} {m.group(2)}", text)
 
-    text = re.sub(r'\bPsalm (\d+)\b',
-                  lambda m: f"Psalm {ORDINAL_NOMINATIVE.get(m.group(1), m.group(1))}", text)
+    text = re.sub(r'\bPsalm (\d+)\s*([A-Za-z]?)\b',
+                  lambda
+                      m: f"Psalm {ORDINAL_NOMINATIVE.get(m.group(1), m.group(1))}{' ' + m.group(2).upper() if m.group(2) else ''}",
+                  text)
 
     def siglum_replacer(match):
-        rozdział = ORDINAL_NOMINATIVE.get(match.group(1), match.group(1))
+        rozdzial = ORDINAL_NOMINATIVE.get(match.group(1), match.group(1))
         wers_od = ORDINAL_GENITIVE.get(match.group(2), match.group(2))
         wers_do = ORDINAL_GENITIVE.get(match.group(3), match.group(3))
-        return f"rozdział {rozdział}, wersety od {wers_od} do {wers_do}"
+        return f"rozdział {rozdzial}, wersety od {wers_od} do {wers_do}"
 
     text = re.sub(r'\b(\d+),\s*(\d+)[–-](\d+)\b', siglum_replacer, text)
 

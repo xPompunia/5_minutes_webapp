@@ -127,7 +127,7 @@ def parse_docx_to_excel(docx_file, empty_xlsx_path, target_year):
                 for key in ['gospel', 'contemplation', 'prayer']:
                     if key in current_day and current_day[key]:
                         current_day[key] = current_day[key].replace('\n', ' ')
-                        # usuwamy ewentualne podwójne spacje po usunięciu enterów
+                        # collapse double spaces left after removing line breaks
                         current_day[key] = re.sub(r'\s+', ' ', current_day[key]).strip()
 
                 rows.append(current_day)
@@ -138,7 +138,7 @@ def parse_docx_to_excel(docx_file, empty_xlsx_path, target_year):
             if match:
                 day = match.group(1).zfill(2)
                 month = months_map.get(match.group(2), "01")
-                formatted_date = f"{day}/{month}/{target_year}"  # Używamy roku z aplikacji
+                formatted_date = f"{day}/{month}/{target_year}"  # year comes from the app setting
             else:
                 formatted_date = date_part
 
@@ -207,7 +207,7 @@ def parse_docx_to_excel(docx_file, empty_xlsx_path, target_year):
                 else:
                     current_day[current_section] = text
 
-    # Zapisz ostatni dzień z pętli (te same operacje oczyszczania co wyżej)
+    # Save the last day from the loop (same cleanup as above)
     if current_day:
         if 'contemplation' in current_day and current_day['contemplation']:
             lines = current_day['contemplation'].strip().split('\n')
